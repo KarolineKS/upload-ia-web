@@ -1,9 +1,12 @@
 import { fastify } from 'fastify';
+import { prisma } from '../src/lib/prisma'
 
 const app = fastify();
 
-app.get('/', () => {
-  return 'Hello World';
+app.get('/prompts', async () => {
+  const prompts = await prisma.prompt.findMany()
+
+  return prompts ;
 });
 
 app.listen({
@@ -11,3 +14,5 @@ app.listen({
 }).then(()=> {
   console.log("HTTP Server Running port 3333!")
 });
+
+
